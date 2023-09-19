@@ -1,0 +1,32 @@
+name: OWRT-TEST
+
+on:
+  workflow_dispatch:
+
+env:
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+permissions: write-all
+
+jobs:
+  owrt_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: find
+        run: |
+          export list=".*/\(android\|azure\|docker\|dotnet\|firefox\|ghc\|google\|libgl1\|llvm\|mongodb\|mono\|mysql\|openjdk\|php\|powershell\|snap\|zulu\).*"
+          sudo find / -maxdepth 4 -type d -iregex "$list" >> /tmp/all.txt
+
+      - name: Release Firmware
+        uses: softprops/action-gh-release@master
+        with:
+          tag_name: 测试专用
+          files: /tmp/*.txt
+          body: |
+            测试专用
+
+      - name: Delete Old Workflows
+        uses: Mattraks/delete-workflow-runs@main
+        with:
+          retain_days: 0
+          keep_minimum_runs: 1
