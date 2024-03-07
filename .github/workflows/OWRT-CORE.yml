@@ -85,6 +85,8 @@ jobs:
           echo "src-git passwall https://github.com/xiaorouji/openwrt-passwall.git;main" >> "feeds.conf.default"
           ./scripts/feeds update -a
           ./scripts/feeds install -a
+          rm -rf ./scripts/feeds/packages/lang/golang
+          git clone https://github.com/sbwml/packages_lang_golang -b 22.x ./scripts/feeds/packages/lang/golang
 
       - name: Custom Scripts
         run: |
