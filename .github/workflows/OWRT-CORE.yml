@@ -77,21 +77,19 @@ jobs:
       - name: Clone OWRT Code
         run: |
           git clone --depth=1 --single-branch $OWRT_URL ./owrt
-          cd ./owrt
-          ls -l
 
       - name: Update Feeds
         run: |
           cd ./owrt
-          ls -l
           sed -i '1i src-git kenzo https://github.com/kenzok8/openwrt-packages' feeds.conf.default
           sed -i '2i src-git small https://github.com/kenzok8/small' feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
-          ls -l
           rm -rf feeds/packages/lang/golang
           git clone https://github.com/kenzok8/golang feeds/packages/lang/golang
           ls -l
+          sed -i "s/openwrt-\$(UU_ARCH)\/\$(PKG_VERSION)\/uu.tar.gz?/openwrt-\$(UU_ARCH)\/\$(PKG_VERSION)\//g" feeds/packages/net/uugamebooster/Makefile
+          sed -i "s/\$(PKG_NAME)-\$(UU_ARCH)-\$(PKG_VERSION).tar.gz/uu.tar.gz/g" feeds/packages/net/uugamebooster/Makefile
 
       - name: Custom Scripts
         run: |
