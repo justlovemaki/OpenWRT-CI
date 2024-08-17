@@ -78,6 +78,7 @@ jobs:
         run: |
           git clone --depth=1 --single-branch $OWRT_URL ./owrt
           cd ./owrt
+          ls -l
           sed -i "s/openwrt-\$(UU_ARCH)\/\$(PKG_VERSION)\/uu.tar.gz?/openwrt-\$(UU_ARCH)\/\$(PKG_VERSION)\//g" net/uugamebooster/Makefile
           sed -i "s/\$(PKG_NAME)-\$(UU_ARCH)-\$(PKG_VERSION).tar.gz/uu.tar.gz/g" net/uugamebooster/Makefile
 
